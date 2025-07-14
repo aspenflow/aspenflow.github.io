@@ -1,5 +1,5 @@
 ---
-date: 2025-04-01 05:20:35 +0300
+date: 2021-05-01 05:20:35 +0300
 title: 'Modeling Residential Parking Demand with Vision Sensing: Full-Stack Data Science Project'
 subtitle: Raspberry Pi + Linux + Docker + Python + TensorFlow + SSIS + SQL + Tableau
 image: '/images/uncapark1.png'

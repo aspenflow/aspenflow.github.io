@@ -1,5 +1,5 @@
 ---
-date: 2025-04-01 05:20:35 +0300
+date: 2022-06-01 05:20:35 +0300
 title: 'Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search'
 subtitle: Gaussian Modeling + Scoring 
 image: '/images/apartment-ranking.webp'

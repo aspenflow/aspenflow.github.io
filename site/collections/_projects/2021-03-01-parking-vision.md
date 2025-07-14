@@ -1,5 +1,5 @@
 ---
-date: 2025-04-01 05:20:35 +0300
+date: 2021-03-01 05:20:35 +0300
 title: 'Parking Lot Traffic Monitoring: Edge Deployment of CNN Vision Model'
 subtitle: Raspberry Pi + Linux + Docker + Python + TensorFlow
 image: '/images/trafficsensor11.png'
