@@ -12,4 +12,4 @@ footer_menu__settings:
 #      url: '/blog/'
 
 copyright_text_html: >-
-  <p> 2025 &copy; <a href="/">Jake Haines</a></p>
+  <p> &copy;2025 <a href="/">Jake Haines</a></p>
