@@ -37,7 +37,7 @@ jobs:
         run: npm run jekyll:install
 
       - name: Build Jekyll site
-        working-directory: .
+        working-directory: ./site
         run: bundle exec jekyll build
 
       - name: Deploy to GitHub Pages
