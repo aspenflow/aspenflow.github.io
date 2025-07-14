@@ -219,10 +219,10 @@ table th {
   padding: 10px;
   font-size: 16px;
   text-align: left;
-  border: 1px solid $text-color;
+  border: 1px solid $dark;
   color: $white;
   font-weight: 700;
-  background-color: $text-color;
+  background-color: $dark;
 }
 
 table tr {
@@ -236,7 +236,7 @@ table tr {
 table td {
   padding: 10px;
   font-size: 14px;
-  border: 1px solid $text-color;
+  border: 1px solid $dark;
 }
 
 .lazy {
