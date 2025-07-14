@@ -34,7 +34,7 @@ jobs:
         run: bundle install
 
       - name: Build Jekyll site
-        working-directory: ./site
+        working-directory: .
         run: bundle exec jekyll build
 
       - name: Deploy to GitHub Pages
