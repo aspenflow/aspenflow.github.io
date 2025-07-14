@@ -33,6 +33,9 @@ jobs:
         working-directory: ./site
         run: bundle install
 
+      - name: Jekyll install
+        run: npm run jekyll:install
+
       - name: Build Jekyll site
         working-directory: .
         run: bundle exec jekyll build
