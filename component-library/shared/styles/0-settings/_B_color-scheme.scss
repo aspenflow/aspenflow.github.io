@@ -26,4 +26,4 @@ $border-color: #D5D5D5;
 $hr-color: $text-color;
 $tr-color: #f0f0f0;
 
-$syntax-highlighting-background: #f3f3f3;
+$syntax-highlighting-background:lighten($background-color, 25%);
