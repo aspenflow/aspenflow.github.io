@@ -198,7 +198,7 @@
 
     .nav__title {
       display: block;
-      padding: 0 0 24px 56px;
+      padding: 0 0 24px 40px;
       margin-bottom: 24px;
       font-size: 32px;
       line-height: 1;
@@ -210,7 +210,7 @@
 
   @media only screen and (max-width: $mobile) {
     .nav__icon-close {
-      right: 56px;
+      right: 30px;
     }
   }
 }
