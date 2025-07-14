@@ -2,7 +2,7 @@
 date: 2022-06-01 05:20:35 +0300
 title: 'Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search'
 subtitle: Gaussian Modeling + Scoring 
-image: '/images/apartment-ranking.webp'
+image: '/images/apartment-ranking.png'
 ---
 Have you ever been apartment searching, and had a large, comprehensive list of places you were looking at? It can get overwhelming — and is often hard to decide what your best option is because you feel ambivalent towards most if not all apartments on your list (this is especially true in the Bay Area).
 
