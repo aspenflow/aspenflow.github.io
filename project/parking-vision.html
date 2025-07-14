@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Parking Lot Traffic Monitoring: Edge Deployment of CNN Vision Model</title>
+  <meta name='description' content='Data Engineer driven by systems thinking and curiosity about the world. I take pride in my knowledge across disciplines like scientific research, automotive, sensors, and audio, allowing me to understand data in context and leverage it effectively.'>
+
+  <link rel="canonical" href="/project/parking-vision">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Parking Lot Traffic Monitoring: Edge Deployment of CNN Vision Model – Jake Haines | Data">
+  <meta name="twitter:description" content="For an undergraduate research project, I created a system based off of the one  designed by Nathan Rooy. Many thanks to Nathan for having kept in touch with me via LinkedIn and helping me with any issues I had along the way, as well as creating the project to begin with.
+">
+  <meta name="twitter:image:src" content="/images/trafficsensor11.png">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="Parking Lot Traffic Monitoring: Edge Deployment of CNN Vision Model – Jake Haines | Data">
+  <meta property="og:description" content="For an undergraduate research project, I created a system based off of the one  designed by Nathan Rooy. Many thanks to Nathan for having kept in touch with me via LinkedIn and helping me with any issues I had along the way, as well as creating the project to begin with.
+">
+  <meta property="og:image" content="/images/trafficsensor11.png">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
+
+  <!-- Remixicons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/sig.png" alt="Jake Haines | Data">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <div class="main-nav__box">
+
+            <div class="nav__icon-close">
+              <i class="ion ion-md-close"></i>
+            </div>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/resume/" class="nav__link">Resume</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/contact/" class="nav__link">Contact</a>
+                </li>
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://linkedin.com/in/jhainesnc" target="_blank" rel="noopener" aria-label="ri-linkedin-box-fill icon"><i class="ri-linkedin-box-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="me@jakehaines.com" target="_blank" rel="noopener" aria-label="ri-mail-fill icon"><i class="ri-mail-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-kakao-talk-fill icon"><i class="ri-kakao-talk-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-wechat-fill icon"><i class="ri-wechat-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-line-fill icon"><i class="ri-line-fill"></i></a>
+    </li>
+    
+  </ul>
+</div>
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+    <div class="container">
+
+  <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page-heading/page-heading.jekyll.html) params(title=page.title description=page.subtitle) context() -->
+
+<div class="container">
+  <div class="c-page-heading">
+    <h1 class="c-page-heading__title">Parking Lot Traffic Monitoring: Edge Deployment of CNN Vision Model</h1>
+    
+      <p class="c-page-heading__description">Raspberry Pi + Linux + Docker + Python + TensorFlow</p>
+    
+  </div>
+</div>
+<!--bookshop-live end-->
+  
+  <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page-image/page-image.jekyll.html) params(image=page_image) context() -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col-12">
+      <div class="c-page-image animate">
+        <img loading="lazy" src="/images/trafficsensor11.png" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<!--bookshop-live end-->
+
+  <div class="page animate">
+    <p>For an undergraduate research project, I created a system based off of the one  <a href="https://nathanrooy.github.io/posts/2019-02-06/raspberry-pi-deep-learning-traffic-tracker/">designed by Nathan Rooy</a>. Many thanks to Nathan for having kept in touch with me via LinkedIn and helping me with any issues I had along the way, as well as creating the project to begin with.</p>
+
+<p>The system is a Raspberry Pi that runs an object classification TensorFlow model and stores detection data in a CSV for further analysis. Read more of the project concept and statistical analysis  <strong>in the other article on my profile (which I will post here later when it is complete)</strong>. This article is designed as a setup guide for anyone looking to replicate the system.</p>
+
+<h3 id="materials">Materials</h3>
+
+<p>To build the project, you will need the following materials. I will link to where I purchased them from, so if they’re no longer available, run a Google search to check elsewhere:</p>
+
+<ul>
+  <li>Raspberry Pi 4 B (2GB RAM) — $35:  <a href="https://www.pishop.us/product/raspberry-pi-4-model-b-2gb/">pishop.us</a></li>
+  <li>Raspberry Pi NoIR Camera v2 — $30:  <a href="https://www.adafruit.com/product/3100#tutorials">Adafruit</a></li>
+  <li>MicroSD 32GB, with an SD adapter,  <a href="https://elinux.org/RPi_SD_cards">from this list</a>  of compatible cards. I got mine from Staples at $14.</li>
+  <li>3ft Ethernet Cable — $5:  <a href="https://www.officedepot.com/a/products/417157/Ativa-Cat-5e-Ethernet-Cable-3/?utm_source=google&amp;utm_medium=cpc&amp;&amp;gclsrc=aw.ds&amp;gclid=CjwKCAiA4rGCBhAQEiwAelVti98n7hHsRZZAki_B-ZUTrnAU2nfZR7HlsfJPwivIhrJrQASaM1kDNhoCnCkQAvD_BwE&amp;gclsrc=aw.ds">OfficeDepot</a></li>
+  <li>j5Create USB 3.0 Gigabit Ethernet Adapter (JUE130) — $25:  <a href="https://www.bestbuy.com/site/j5create-usb-3-0-to-gigabit-ethernet-adapter-gray/2001047.p?skuId=2001047&amp;ref=212&amp;loc=1&amp;ref=212&amp;loc=1&amp;ds_rl=1264993&amp;ds_rl=1264987&amp;gclid=CjwKCAiA4rGCBhAQEiwAelVti4vp5oMBqE6Q9toYnkuC_vuz-ySOt11tfPZiV0o624n8w9IOuiVMbhoCauUQAvD_BwE&amp;gclsrc=aw.ds">BestBuy</a>. Note: you don’t need this if your computer already has an ethernet adapter.</li>
+  <li>Large Plastic Project Enclosure — $20:  <a href="https://www.adafruit.com/product/905">Adafruit</a>.</li>
+  <li>INIU 18W 20000mAh Power Bank — $20:  <a href="https://www.amazon.com/gp/product/B07YCR7FR9/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&amp;psc=1">Amazon</a>. For this, you must be  <strong>absolutely sure</strong> that the battery is 5.3 inches in length or less, unless you plan on getting a larger project box than the one I am using here. For this project, I needed to run the system for about 16 hours straight, so 20000mAh was appropriate for this. You may adjust that capacity as necessary, but beware the size constraints of your project box. Additionally, the Pi 4 takes power via USB-C, so be sure your battery includes a USB-C cable, or get an adapter.</li>
+  <li>Neodymium Countersunk Ring Magnets N42 (20 Pack) — $15:  <a href="https://totalelement.com/collections/countersunk-discs/products/1-2-x-1-8-x-1-8-inch-neodymium-rare-earth-countersunk-ring-magnets-n42-20-pack">totalElement</a>. It doesn’t have to be these exact neodymium magnets, but be sure whatever you get are N42 and are a “ring” magnet as you will need to use a screw to attach them to the project case.</li>
+  <li>Plan to budget an additional  <strong>$20</strong> toward  any additional adhesive materials, screws, nuts, etc.</li>
+  <li>Computer preferably running Ubuntu 20.04 (Windows 10 and MacOS pre-BigSur work too, this is just for driver compatibility with the ethernet adapter).</li>
+</ul>
+
+<p>In total, you’re looking at around  <strong>$185</strong> for the system. This is  <em>considerably less expensive</em> than the $450+ pneumatic tube systems.</p>
+
+<h3 id="pi-configuration">Pi Configuration</h3>
+
+<p>Once you have everything delivered, you’ll need to install Raspbian OS onto the microSD card and do some configuration on the Pi.</p>
+
+<h4 id="install-raspbian-os">Install Raspbian OS</h4>
+
+<p>Insert the microSD into a microSD reader or adapter that goes into your computer. Raspberry Pi provides a utility that makes doing this fairly quick and easy.  <a href="https://www.raspberrypi.org/software/">Download Raspberry Pi Imager</a>, and install.</p>
+
+<p>Once installed, open Raspberry Pi Imager. Select OS as Raspbian Pi OS (32-bit), and choose the microSD card you just inserted into your computer.</p>
+
+<p><img src="../../images/trafficsensor1.png" alt="trafficsensor1.png" />
+<img src="../../images/trafficsensor2.png" alt="trafficsensor2.png" /></p>
+
+<blockquote>
+  <p><strong>UPDATE 2022:</strong> For security, all RPis are being shipped without an account setup for security purposes. Before flashing your microSD, be sure to click the cogwheel at the bottom right hand corner of the Imager window. Select “Enable SSH”, and add the desired username and password.</p>
+</blockquote>
+
+<p>Once you’ve done so, start the install. It should take a few minutes, depending on the transfer speed of your microSD card. Once your install is finished, you need to configure a few things to make it boot up and be visible by your machine.</p>
+
+<h4 id="edit-configtxt-on-the-boot-partition">Edit config.txt on the boot partition</h4>
+
+<p>Now that you’ve installed Raspbian, with the SD card still in your computer, navigate to the boot directory on the SD card, and open the file called  <strong>config.txt</strong>.</p>
+
+<p><img src="../../images/trafficsensor3.png" alt="trafficsensor3.png" /></p>
+
+<p>At the end of the file, you’re going to want to add the following:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dtoverlay=dwc2
+</code></pre></div></div>
+<p>The end result should look like the image below. Make sure you save and exit when done.</p>
+
+<p><img src="../../images/trafficsensor4.png" alt="trafficsensor4.png" /></p>
+
+<h4 id="enable-ssh-so-you-can-talk-to-your-pi">Enable SSH, so you can talk to your Pi</h4>
+
+<p>With the SD card still in your computer, create a file in the root directory of the card by making an empty file called ssh there. However you choose to do that is by your means. Personally, I just navigated to the directory and used a command.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../.. <span class="c"># This takes you to the root directory of a Mac from your home directory </span>
+<span class="nb">cd </span>Volumes/boot <span class="c"># Replace "boot" with the name of the SD card volume</span>
+<span class="nb">touch </span>ssh <span class="c"># The touch command creates a file with the given name  </span>
+<span class="nb">ls</span> <span class="c"># Check to make sure the file was created</span>
+</code></pre></div></div>
+
+<p><img src="../../images/trafficsensor5.png" alt="trafficsensor5.png" /></p>
+
+<h4 id="edit-cmdlinetxt">Edit cmdline.txt</h4>
+
+<p>Edit the file called  <strong>cmdline.txt.</strong> Find  <strong>rootwait</strong>, and add the following, with a space before and after it:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>modules-load=dwc2,g_ether
+</code></pre></div></div>
+<p>The resulting file should look something like this once you’ve done that:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>console=serial0,115200 console=tty1 root=PARTUUID=84b6fcd0–02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait **modules-load=dwc2,g_ether** quiet splash plymouth.ignore-serial-consoles
+</code></pre></div></div>
+<p>Be sure to save and exit when done.</p>
+
+<h4 id="connect-to-your-pi">Connect to your Pi</h4>
+
+<p>Everything is set up now so you can access your Pi. Eject your SD card, and insert it into the microSD slot on your Pi.</p>
+
+<p>First, insert the USB-Ethernet adapter into your computer, if this applies to you. Mac and Windows require additional driver installation for this to work properly, so download the appropriate driver (JUE130) from  <a href="https://en.j5create.com/pages/drivers">this page</a>  and if you’re running Mac or Windows, see the instructions after.</p>
+
+<p>Ubuntu, however, doesn’t need additional drivers to work. Plug in the adapter and reboot. Then, connect the Pi to the adapter using the ethernet cable. Find the wired network settings in Ubuntu, and under IPv4 and IPv6, change the method to “Link-Local Only”. You need to do this since your Pi is not an access point and is not providing internet to your computer. You’ll have a hard time using ssh if you do not complete this step.</p>
+
+<p>For other OS types, there may be additional setup required. J5Create should give you the full setup instructions on installation, otherwise see Google on using a USB-ethernet adapter.</p>
+
+<p>To test to see if your Pi is working, you can simply ping it by using the following command (in Mac/Linux, Windows might be different):</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping raspberrypi.local <span class="c"># raspberrypi.local is the address of your Pi</span>
+</code></pre></div></div>
+
+<p>If all runs well, which it should, you should get a result that looks something like this:</p>
+
+<p><img src="../../images/trafficsensor6.png" alt="trafficsensor6.png" /></p>
+
+<p>Additionally, you should see both the downlink and uplink LEDs lit on the Pi’s ethernet port and the adapter.</p>
+
+<p>If you end up getting and error that says  <strong>ping: cannot resolve raspberrypi.local: Unknown host</strong>, wait a few moments and try again. The Pi probably didn’t boot up all the way. If you still have issues, use the name  <strong>raspberrypi</strong>. If you are  <em>still</em> having issues connecting to your Pi after that, you may want to restart the process over again from installing Raspbian, or just Google your issues.</p>
+
+<h4 id="access-raspbian-for-headless-units">Access Raspbian (for headless units)</h4>
+
+<blockquote>
+  <p><strong>UPDATE 2022:</strong>  For security, all RPis are being shipped without the default login pi / raspberry. In Raspberry Pi Imager, you should have configured the advanced settings so SSH is enabled and you have set a username/password of your choice.</p>
+</blockquote>
+
+<p>If you don’t have a monitor and keyboard available for your Pi, there is an easy fix. Before you can access Raspbian, you need to ssh into the Pi by using the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh pi@raspberrypi.local
+</code></pre></div></div>
+
+<p>Accept any prompts that come up, and use the default password to login, which is  <strong>raspberry.</strong>  You should change this later.</p>
+
+<p>Now that you’re logged in via ssh, for what’s next, you need to enable the VNC server which allows you to see and access your Pi’s desktop. To do so, use the following command to access the configuration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>raspi-config
+</code></pre></div></div>
+<p>Then, scroll to interface options using the up/down keys, and hit enter to select. Once you’re in the interface options, scroll to  <strong>VNC</strong>  and select  **<Yes>**.</Yes></p>
+
+<p>Additionally, you’ll need to go to localisation options and set your locale and timezone, as well as entering the SSID and password of your wi-fi network (so your Pi can connect to the outside world to download dependencies later on).</p>
+
+<p><img src="../../images/trafficsensor7.png" alt="trafficsensor7.png" />
+<img src="../../images/trafficsensor8.png" alt="trafficsensor8.png" /></p>
+
+<p>Select  **<Ok>** in the next dialogue, and use the left and right arrow keys to select  **<Finish>**. Your Pi will reboot.</Finish></Ok></p>
+
+<p>Great, now you’re set up to access your Pi desktop remotely.</p>
+
+<p>You can use  <strong>VNC Viewer</strong> to view the desktop of your Pi and use it through there. I’m won’t go too in detail about how to install this, just go to the  <a href="https://www.realvnc.com/en/connect/download/viewer/">VNC Viewer download page</a>, select the correct installation for your machine, and install. Then, go to  <strong>File » New Connection…</strong> and type in  <strong>raspberrypi.local</strong> for the VNC server (or whatever name you used in the previous step), and leave the other options alone.</p>
+
+<p>With that installed and set up, you can double click on the connection you just made in VNC Viewer. Hit “Continue” on any prompts that come up, then login using the same credentials as with ssh:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># deprecated as of 2025
+User: pi  
+Password: raspberry
+</code></pre></div></div>
+<p>When you login, you’ll need to complete the configuration. It should walk you through everything you need to do step-by-step. When you’re done, your Pi is ready to be used remotely! VNC will prove to be useful especially if you need to troubleshoot the model.</p>
+
+<h3 id="install-necessary-software-packages">Install Necessary Software Packages</h3>
+
+<h4 id="install-docker">Install Docker</h4>
+
+<p>To install the model on your Pi system, Nathan Rooy simplified the install of the model and application by dockerizing it. I highly recommend you look into what Docker is and how it works before proceeding, as doing so will help solve any issues you are having, if you have any. Personally, I found  <a href="https://www.youtube.com/watch?v=Gjnup-PuquQ">this 2-minute video</a>  to be very helpful.</p>
+
+<p>To install docker on a Raspberry Pi, follow the  <a href="https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script">Docker documentation install guide for Debian.</a></p>
+
+<p>Then, once you’ve installed Docker, you need to add the current user to the Docker user group (so the user can run the container without needing sudo permissions).</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker pi
+</code></pre></div></div>
+
+<p>If this command executes successfully, it will not output anything. It may yield an error that requires you to create a user group (as the user group does not exist in the first place), which should be solved by using this command, then retrying adding pi to the user group after:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>groupadd docker  
+<span class="nb">sudo </span>reboot <span class="c"># You need to reboot for the changes to take effect</span>
+</code></pre></div></div>
+
+<h4 id="install-urban-mobility-tracker-umt">Install Urban Mobility Tracker (UMT)</h4>
+
+<p>Next, you need to install the application and its dependencies through Docker. So if your docker install isn’t yet working, fix that!</p>
+
+<p>To simplify install and running of the application, I have created a small shell script. In your home directory, download  <a href="https://raw.githubusercontent.com/hainesdata/rpi-urban-mobility-tracker/master/shell/install.sh">install.sh</a>  from my github repo (forked from  <a href="https://github.com/nathanrooy/rpi-urban-mobility-tracker">Nathan Rooy’s repo</a>) and run by using the following commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget <span class="o">[</span>https://raw.githubusercontent.com/hainesdata/rpi-urban-mobility-tracker/master/shell/install.sh]<span class="o">(</span>https://raw.githubusercontent.com/hainesdata/rpi-urban-mobility-tracker/master/shell/install.sh<span class="o">)</span>  
+<span class="nb">chmod</span> +x install.sh  
+./install.sh
+</code></pre></div></div>
+
+<p>The script should install everything, build the container, and run the container automatically. Go and get some food, as this will take a while — maybe around 20 minutes.</p>
+
+<h4 id="test-umt">Test UMT</h4>
+
+<p>Once that’s done, test out UMT with the container running to see if it works.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>umt_output <span class="c"># Make sure you are in UMT directory, unless you're already in the running container.  </span>
+wget https://github.com/hainesdata/rpi-urban-mobility-tracker/raw/master/sampledata/sampledata-01.mp4 <span class="c"># Downloads sample footage  </span>
+umt <span class="nt">-video</span> sampledata-01.mp4 <span class="nt">-save</span>  
+<span class="nb">ls </span>output
+</code></pre></div></div>
+<p>If all works okay, there should be a directory titled ‘output’ which, when running the  <strong>ls output</strong>  command, should contain annotated .jpg images. Additionally, there should exist a CSV file titled ‘object_paths.csv’. Ignore any of the warnings related to TensorBoard or bogomips. That is expected behavior, and does not hinder the model’s functions.</p>
+
+<p>It is also possible that the annotations on the sample video are simply not accurate — again, that is expected behavior. Try running the following, and point your RPi camera around with your surroundings, and hit control + C after a few moments to stop the live analysis:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo rm</span> <span class="nt">-rf</span> output object_paths.csv _#Clear recent <span class="nb">test </span>results_  
+umt <span class="nt">-camera</span> <span class="nt">-save</span>
+</code></pre></div></div>
+
+<p>You should see frames counting, similar to the last analysis. Where there is not a message displaying “no detections…”, the model is detecting objects and all is working. To check your results, you may review the photos in the output directory, or use the frame stitching tool I included in my repo. To use that, run the commands below to download:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">${</span><span class="nv">UMT_DIR</span><span class="k">}</span>  
+wget https://raw.githubusercontent.com/hainesdata/rpi-urban-mobility-tracker/master/shell/stitch.sh 
+<span class="nb">chmod</span> +x stitch.sh
+</code></pre></div></div>
+
+<p>And execute as you normally would a shell script:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./stitch.sh
+</code></pre></div></div>
+
+<p>This takes all the frames and stitches them together in an MP4 video titled “analyzed-frames.mp4”. The video will be quite sped up, and this can be changed by using  <strong>nano</strong> and editing the “setpts” parameter in stitch.sh. If you’re not familiar with how to use nano, here’s a quick instruction for our purposes:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano stitch.sh
+</code></pre></div></div>
+
+<p>Then use the left and right arrows to scroll to the “setpts” parameter and change as desired. The parameter is a proportion of how long each frame is in length in the video, so smaller numbers means faster video speed. For real-time speed, try PTS<em>3 or PTS</em>4. When you’re done, simply CTRL+S to save and CTRL+X to exit nano.</p>
+
+<h3 id="system-assembly">System Assembly</h3>
+
+<h4 id="project-box-mounting">Project Box: Mounting</h4>
+
+<p>Project box assembly can be very subjective, since it depends on the magnets you get, project enclosure, and the weight of your system overall. I will be keeping this more general for that reason.</p>
+
+<p>To hold the project box, you need about 3–4 magnets to successfully hold the weight of the project. If you’re using a different project box, 3 may be a good starting point, but increase if you notice your box is sliding when you mount it to a magnetic and vertical surface. In my case, I only needed 3.</p>
+
+<p>You’re going to need a drill for this, as you need to puncture the plastic of the project box to insert a screw (you’ll need screws that fit snugly through your magnets) into it. With Adafruit’s project box, there are already good spots to drill into. It may be different for your case, but either way, nuts come in handy to hold the screws in place from the other side. Just be sure to make the screw placement near the edges of the box, as you may end up having a difficult time fitting the other components in later.</p>
+
+<p>Here’s what mine looked like:</p>
+
+<p><img src="../../images/trafficsensor9.jpeg" alt="trafficsensor9.jpeg" />
+<img src="../../images/trafficsensor10.jpeg" alt="trafficsensor10.jpeg" /></p>
+
+<h4 id="project-box-camouflaging">Project Box: Camouflaging</h4>
+
+<p>Depending on the environment you set up your system in, you may want to make your system more discrete for the purposes of preventing any kind of tampering or theft. This is especially true with Adafruit’s project box, as the lid is clear so you can see everything.</p>
+
+<p>In my case, I painted the box. I simply placed a penny over a spot on the lid while it is on the box (as to create clearance for the camera), and used Plasti-Dip to cover the enclosure (except the bottom side with the magnets) in matte black. I didn’t make it anything perfect — it just had to do its job of making it less noticeable, which it did. Also, if you’re not familiar with Plasti-Dip, be sure to read more about it  <a href="https://plastidip.com/our-products/plasti-dip/">here</a>. It’s an incredible product that can be used for multiple purposes. In short, it’s paint that can be peeled like rubber and not leave a mark.</p>
+
+<p><img src="../../images/trafficsensor11.png" alt="trafficsensor11.png" /></p>
+
+<p>Yes, the lights of the system are dim but still visible, especially at night. This is especially useful when testing, as you can monitor the battery level throughout the day without needing to undo the enclosure.</p>
+
+<h4 id="adding-the-components">Adding the components</h4>
+
+<p>The next step would be to add all the components (battery and Pi w/ camera) to the enclosure. I would highly recommend using 5–10lb velcro strips to hold the battery onto the enclosure, along with command strips to hold the Pi in place on the battery. Of course, it is completely optional to do this and you may go about it however you’d like. Keep in mind that the Pi heats up quite a bit, so the adhesive or mounting device has to be able to hold through that.</p>
+
+<p>Personally, I was on a tight budget and ended up leaving everything loose, as the battery fit almost perfect when it had a wire connected, and the Pi wouldn’t go anywhere. I duct-taped the camera to the lid to hold it in place. See below for what mine looked like:</p>
+
+<p><img src="../../images/trafficsensor12.jpg" alt="trafficsensor12.jpg" />
+<img src="../../images/trafficsensor13.jpg" alt="trafficsensor13.jpg" /></p>
+
+<p>I didn’t end up needing velcro for this battery. Because of the USB cable attached to the battery, the battery fit tightly into the case and was made with an elastic-like finish that held it into place. If you’re going to do it this way, for the sake of the poor wire, make sure that the wire is bent in the same direction each time you insert the battery and doesn’t have too much tension in it when doing so. I’m sure engineers are understandably laughing at this, but it’s as functional as it needs to be for my purposes.</p>
+
+<h4 id="system-field-testing">System Field Testing</h4>
+
+<p>Now that the assembly is done and UMT is up and running, the system can finally see the light of day. You’ll need to take a laptop, ethernet adapter (if applicable), ethernet cable, and of course, the system with you to wherever you plan on testing it.</p>
+
+<p>Connect to the Pi by opening VNC and connecting to the host that we set up earlier. With the Pi’s desktop open in VNC Viewer, start a terminal within the remote desktop.</p>
+
+<p>With the case open and UMT-Pi connected to your laptop, start the container. You can run the  <strong>init.sh</strong>  shell file downloaded by  <strong>install.sh</strong> to automatically start everything, provided you already installed UMT. If you haven’t yet installed UMT, your Pi will need to be connected to the internet to do so. With the Docker container started, run the following to start UMT and enable background processing:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">nohup </span>umt <span class="nt">-camera</span> <span class="nt">-save</span>
+</code></pre></div></div>
+
+<p>Because we are running UMT with nohup, there will be no output on the terminal. The output will be directed to a file called nohup.out, so should any errors arise (stops recording out of nowhere, memory leaks, etc), you have the output file to look for any errors. Additionally, use  <a href="https://stackoverflow.com/a/10979779">syslogs</a>  to help troubleshoot. The method to run UMT is the same regardless of whether you are testing or in the real data collection phase.</p>
+
+<p>Once you’ve started the model, wait a few moments, and then disconnect the ethernet cable from the Pi, close the enclosure, and mount it. Your system should be recording (and will also record you opening and closing the enclosure — <em>for accurate analysis, you should exclude the first and last couple hundred frames or so. This depends on how long it takes you to setup/shutdown</em>).</p>
+
+<p><img src="../../images/trafficsensor14.jpg" alt="trafficsensor14.jpg" /></p>
+
+<p>Feel free to pack your stuff up and leave for a while, but note that the  <code class="language-plaintext highlighter-rouge">-save</code>  flag used earlier is only useful with less than 2 hours of testing. Docker will kill the process after almost 2GB of images is reached since the saved images are temporarily stored in memory (this is the nature of how Docker containers work). When you’re ready to stop it, unmount it, open the enclosure, insert the ethernet cable, reconnect to the Pi in VNC, and finally hit Ctrl+Z in the terminal window (which should still be open) to stop the process. It may take a few moments for the console to respond. But once it’s done, you can run stitch.sh or manually look at the frames, provided you ran UMT with  <code class="language-plaintext highlighter-rouge">-save</code>. Furthermore, all data will be included in the outputted CSV.</p>
+
+<p>If all worked well, your model should be detecting everything smoothly. If not, you may want to adjust the sensitivity threshold as per  <a href="https://github.com/nathanrooy/rpi-urban-mobility-tracker/blob/master/README.md">Nathan’s documentation</a>, and test other angles while recording.</p>
+
+<p>You should also test at night. I noticed the model struggles with detection in dimly lit areas and/or when automobile high-beams are present. Then again, angles can directly affect auto-exposure, which will affect the object detection. Moreover, test during the rain or build an “umbrella” for the lens area. If raindrops cover the plastic that the lens sees out of, the model will most likely struggle with detection and/or classification. The model also detects stationary vehicles, so avoid angling directly at parking lots if measuring traffic, as that may affect the data analyses.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Now that you’ve built the system and tested it, the rest of the study is yours to conduct. Personally, I would be using the classification and x/y data included in the CSV for finding direction of traffic and if something was a car or not. Be sure to charge your battery however often, and account for any missing data. It may be easier to record data over consistent time intervals if this is the case.</p>
+
+<p>I hope that this guide is informative and will help you in your research. If there are any issues along the way, please open an issue on  <a href="https://github.com/hainesdata/rpi-urban-mobility-tracker/issues">my Github repo</a>. If you are interested in my analysis of the data collected and my application of the system, please visit the other article on my profile involving parking traffic. I will post a link here when it is complete.</p>
+
+  </div>
+
+  
+
+</div>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+<!--bookshop-live end-->
+
+    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://linkedin.com/in/jhainesnc" target="_blank" rel="noopener" aria-label="ri-linkedin-box-fill icon"><i class="ri-linkedin-box-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="me@jakehaines.com" target="_blank" rel="noopener" aria-label="ri-mail-fill icon"><i class="ri-mail-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-kakao-talk-fill icon"><i class="ri-kakao-talk-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-wechat-fill icon"><i class="ri-wechat-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-line-fill icon"><i class="ri-line-fill"></i></a>
+    </li>
+    
+  </ul>
+</div>
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/resume/" class="footer_nav__link">Resume</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">Jake Haines</a></p></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>

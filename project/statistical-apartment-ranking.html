@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search</title>
+  <meta name='description' content='Data Engineer driven by systems thinking and curiosity about the world. I take pride in my knowledge across disciplines like scientific research, automotive, sensors, and audio, allowing me to understand data in context and leverage it effectively.'>
+
+  <link rel="canonical" href="/project/statistical-apartment-ranking">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search – Jake Haines | Data">
+  <meta name="twitter:description" content="Have you ever been apartment searching, and had a large, comprehensive list of places you were looking at? It can get overwhelming — and is often hard to decide what your best option is because you feel ambivalent towards most if not all apartments on your list (this is especially true in the Bay Area).
+">
+  <meta name="twitter:image:src" content="/images/apartment-ranking.webp">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search – Jake Haines | Data">
+  <meta property="og:description" content="Have you ever been apartment searching, and had a large, comprehensive list of places you were looking at? It can get overwhelming — and is often hard to decide what your best option is because you feel ambivalent towards most if not all apartments on your list (this is especially true in the Bay Area).
+">
+  <meta property="og:image" content="/images/apartment-ranking.webp">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
+
+  <!-- Remixicons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/sig.png" alt="Jake Haines | Data">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <div class="main-nav__box">
+
+            <div class="nav__icon-close">
+              <i class="ion ion-md-close"></i>
+            </div>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/resume/" class="nav__link">Resume</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/contact/" class="nav__link">Contact</a>
+                </li>
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://linkedin.com/in/jhainesnc" target="_blank" rel="noopener" aria-label="ri-linkedin-box-fill icon"><i class="ri-linkedin-box-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="me@jakehaines.com" target="_blank" rel="noopener" aria-label="ri-mail-fill icon"><i class="ri-mail-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-kakao-talk-fill icon"><i class="ri-kakao-talk-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-wechat-fill icon"><i class="ri-wechat-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-line-fill icon"><i class="ri-line-fill"></i></a>
+    </li>
+    
+  </ul>
+</div>
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+    <div class="container">
+
+  <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page-heading/page-heading.jekyll.html) params(title=page.title description=page.subtitle) context() -->
+
+<div class="container">
+  <div class="c-page-heading">
+    <h1 class="c-page-heading__title">Finding the Optimal Apartment: Statistical Ranking Model for Apartment Search</h1>
+    
+      <p class="c-page-heading__description">Gaussian Modeling + Scoring</p>
+    
+  </div>
+</div>
+<!--bookshop-live end-->
+  
+  <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page-image/page-image.jekyll.html) params(image=page_image) context() -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col-12">
+      <div class="c-page-image animate">
+        <img loading="lazy" src="/images/apartment-ranking.webp" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<!--bookshop-live end-->
+
+  <div class="page animate">
+    <p>Have you ever been apartment searching, and had a large, comprehensive list of places you were looking at? It can get overwhelming — and is often hard to decide what your best option is because you feel ambivalent towards most if not all apartments on your list (this is especially true in the Bay Area).</p>
+
+<p>I ran into this exact issue in my search, which is why I created a somewhat unconventional method to help point you in the right direction when deciding on a place.</p>
+
+<h4 id="this-approach-assumes-the-following">This approach assumes the following:</h4>
+
+<ul>
+  <li>You have a list of places you found via search on platforms like  <a href="https://www.airbnb.com/">Airbnb</a>,  <a href="https://www.apartments.com/">Apartments.com</a>,  <a href="https://www.zillow.com/">Zillow</a>, etc.</li>
+  <li>You have the following data on those places:
+    <ul>
+      <li>Monthly rent (optionally with any additional fees, such as utilities)</li>
+      <li>Unit floor area (in sq. ft)</li>
+      <li>Rating on your overall feeling  <em>about the physical unit (excluding floor area)</em> on 1 to 5 scale*</li>
+    </ul>
+  </li>
+</ul>
+
+<p>In rating each apartment, consider the following: your feelings on safety, management, neighbors, quality of building, etc. All factors should be taken into account. This rating is subjective, which is a quantitative limitation. However, your decision on a place to live is also subjective. This approach aims to mitigate the amount of decision making to be made.</p>
+
+<h3 id="method">Method</h3>
+
+<p>The method used to quantitatively measure the optimal apartment(s) involves quite a bit of normalization, weighting, and ranking. I did all my calculations in Google Sheets, but I’ll walk through the algorithm here.</p>
+
+<p>Let’s define vectors  <em>a</em> (floor area),  <em>b</em>  (rent),  <em>c</em> (your rating), and  <em>T</em> as follows:</p>
+
+<p>\(a = (\text{area}_1, \text{area}_2, ... \text{area}_n)\)
+\(b = (\text{rent}_1, \text{rent}_2, ... \text{rent}_n)\)
+\(c = (\text{feel}_1, \text{feel}_2, ... \text{feel}_n)\)
+\(T = (a,b,c)\)</p>
+
+<p>Each component contained in  <em>a, b,</em> and  <em>c</em>  are the parameters corresponding to each apartment/place you have listed.  <em>T</em> is simply a collection of those vectors.</p>
+
+<p>Let us rank components within the vectors in  <em>T</em> defined by  <em>R:</em></p>
+
+\[R = \text{rank}_t(T) = 
+\begin{bmatrix}
+\text{rank}_a^{-1}(a_1) &amp; \text{rank}_b(b_1) &amp; \text{rank}_c^{-1}(c_1) \\
+\vdots &amp; \vdots &amp; \vdots \\
+\text{rank}_a^{-1}(a_n) &amp; \text{rank}_b(b_n) &amp; \text{rank}_c^{-1}(c_n)
+\end{bmatrix}\]
+
+<p>You will notice rank is being used in columns with a -1 exponent. This is not a -1 exponent, but rather corresponds to inverse. In our case of ranking, an inverse rank corresponds to ranking in  <em>descending order. Using descending order for certain parameters allows us to rank those parameters practically. If the “better” values of b are logically higher, then the “better” values of a and c should be lower.</em></p>
+
+<p>With arbitrary vector  <em>u,</em> we  define the average function as:</p>
+
+\[\text{avg}(u) = \frac{\sum_{i=1}^{n} u_i}{n}\]
+
+<p>n is the number of components in u</p>
+
+<p>and use the average function to calculate the averages of row vectors in  <em>R,</em></p>
+
+\[\overline{\text{rank}(T_i)} = 
+\begin{bmatrix}
+\text{avg}((R_{11}, R_{12}, R_{13})) \\
+\vdots \\
+\text{avg}((R_{n1}, R_{n2}, R_{n3}))
+\end{bmatrix}\]
+
+<p>thereby giving us a single column containing the average of area, rent, and personal rating rankings, for each apartment.</p>
+
+<p>Next, we normalize the values in  <em>a</em>,  <em>b,</em> and  <em>c</em> according to the normal distribution, using the function  <em>f(T)</em> with  <em>t</em> being each component of  <em>T.</em> That is,  <em>t</em> represents each vector containing values for the respective apartment data.</p>
+
+\[f(T) = \frac{1}{\sigma_t \sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x - \mu_t}{\sigma_t} \right)^2}\]
+
+<p>Using the normalized data and discrete weights, we can calculate the average of weighted normalized values for each apartment. You should assign values to these weights depending on how important the respective data is. For example, if floor area of the apartment is not as important, you set weight1 for a = 0.5.  <strong>Additionally, regardless of how much weight you assign on rent (<em>b</em>), rent should always have a negative weight.</strong> This is because higher rent does not mean better, unless for some reason, you want to spend more on an apartment. If the latter is the case, the magnitude of your assigned weight should be smaller.</p>
+
+\[\begin{aligned}
+w_{1a} &amp;= \text{weight}_1 \leftrightarrow a \\
+w_{1b} &amp;= \text{weight}_1 \leftrightarrow b \\
+w_{1c} &amp;= \text{weight}_1 \leftrightarrow c
+\end{aligned}\]
+
+\[\overline{W(f(T))} =
+\begin{bmatrix}
+\text{avg}((w_{1a} * f(T)_{11},\ w_{1b} * f(T)_{12},\ w_{1c} * f(T)_{13})) \\
+\vdots \\
+\text{avg}((w_{1a} * f(T)_{n1},\ w_{1b} * f(T)_{n2},\ w_{1c} * f(T)_{n3}))
+\end{bmatrix}\]
+
+<p>Note: weight 1 of a is the discrete weight value corresponding to a, which applies to weight 1 of b and so forth. f(T) is technically a matrix, so we can reference its elements directly.</p>
+
+<p>It should also be significantly noted that your weights should move the values as close to the same decimal position as possible. For example, if all your values of  <em>b</em> are all in the thousands and your values of  <em>a</em> are in the tens, either set the weight of  <em>b</em> to 0.01 or set the weight of  <em>a</em> to 100. Same would be said for  <em>c.</em> To reiterate, each “column” should contain values that fall near or within the same decimal place of each other.  <strong>If you do not do this, your normalized values later on will be incredibly skewed and thus any averages will be skewed as well.</strong></p>
+
+<p>We define a measure  <em>score1</em>  as follows, with the weighting rules from above applying here as well:</p>
+
+\[\begin{aligned}
+w_{2a} &amp;= \text{weight}_2 \leftrightarrow a \\
+w_{2b} &amp;= \text{weight}_2 \leftrightarrow b \\
+w_{2c} &amp;= \text{weight}_2 \leftrightarrow c
+\end{aligned}\]
+
+\[\text{score}_1 = A =
+\begin{bmatrix}
+\text{avg}((w_{2a} * a_1,\ w_{2b} * b_1,\ w_{2c} * c_1)) \\
+\vdots \\
+\text{avg}((w_{2a} * a_n,\ w_{2b} * b_n,\ w_{2c} * c_n))
+\end{bmatrix}\]
+
+<p>See note regarding the weights under the average of weighted normalized values definition.</p>
+
+<p>Now, using the previous derivations, we can calculate a vector giving us a single score derived from all three original parameters: area, rent, and personal rating. Again, we need to use the same weighting rules mentioned earlier.</p>
+
+\[\begin{aligned}
+w_{3a} &amp;= \text{weight}_3 \leftrightarrow a \\
+w_{3b} &amp;= \text{weight}_3 \leftrightarrow b \\
+w_{3c} &amp;= \text{weight}_3 \leftrightarrow c
+\end{aligned}\]
+
+\[\text{score}_2 = \text{avg} \left( \left( w_{3a} * \overline{\text{rank}(T_i)},\ w_{3b} * \overline{W(f(T))},\ \text{score}_1 \right) \right)\]
+
+<p>Then, using that derived score, we again normalize the components in the vector using function  <em>f</em> from earlier, this time in terms of a single arbitrary vector  <em>u</em>.</p>
+
+\[f(u) = \frac{1}{\sigma_u \sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x - \mu_u}{\sigma_u} \right)^2}\]
+
+<p>Lastly, we use the normalized values of  <em>score2</em>  to derive a vector containing the final ranking of apartments:</p>
+
+\[\text{Apartment rank} =
+\begin{bmatrix}
+\text{rank}(f(u)_1) \\
+\vdots \\
+\text{rank}(f(u)_n)
+\end{bmatrix}\]
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>The resulting ranking should give you a good idea of what apartments to prioritize, however that may be. Maybe it’s picking which apartments to tour in-person, or maybe it’s choosing which apartments are important enough to check for available listings daily. It’s your choice how you use those rankings, but keep in mind those rankings are based off of the weights you assigned, and thus how important the parameters area, rent, and personal rating are.</p>
+
+<p>Hope you enjoyed this nifty math article, and could make use of this! Let me know what you think, and feel free to reach out should you have any questions.</p>
+
+  </div>
+
+  
+  <div class="project__navigation animate">
+    <a class="project__prev" href="/project/unca-parking">
+      <div class="project__box">
+        <span class="project__nav__info">Next Project</span>
+        <h2 class="project__nav__title">Modeling Residential Parking Demand with Vision Sensing: Full-Stack Data Science Project<i class="ri-arrow-right-line"></i></h2>
+      </div>
+    </a>
+  </div>
+  
+
+</div>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+<!--bookshop-live end-->
+
+    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="Vonge") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://linkedin.com/in/jhainesnc" target="_blank" rel="noopener" aria-label="ri-linkedin-box-fill icon"><i class="ri-linkedin-box-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="me@jakehaines.com" target="_blank" rel="noopener" aria-label="ri-mail-fill icon"><i class="ri-mail-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-kakao-talk-fill icon"><i class="ri-kakao-talk-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-wechat-fill icon"><i class="ri-wechat-fill"></i></a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="#" target="_blank" rel="noopener" aria-label="ri-line-fill icon"><i class="ri-line-fill"></i></a>
+    </li>
+    
+  </ul>
+</div>
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/resume/" class="footer_nav__link">Resume</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">Jake Haines</a></p></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>
