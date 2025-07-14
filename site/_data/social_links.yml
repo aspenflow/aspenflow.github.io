@@ -4,7 +4,7 @@
 # Other icons can be found at https://ionicons.com/v4/
 social:
 - {icon: "ri-linkedin-box-fill", link: "https://linkedin.com/in/jhainesnc"}
-- {icon: "ri-mail-fill", link: "me@jakehaines.com"}
-- {icon: "ri-kakao-talk-fill", link: "#"}
-- {icon: "ri-wechat-fill", link: "#"}
-- {icon: "ri-line-fill", link: "#"}
+- {icon: "ri-mail-fill", link: "mailto:me@jakehaines.com"}
+#- {icon: "ri-kakao-talk-fill", link: "#"}
+#- {icon: "ri-wechat-fill", link: "#"}
+#- {icon: "ri-line-fill", link: "#"}
