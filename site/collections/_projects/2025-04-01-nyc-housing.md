@@ -16,7 +16,7 @@ Cylindrical columns highlighted in green indicate a "sleeper neighborhood": thos
 by statistical modelling. 
 
 <iframe src="https://aspenflow.github.io/sleeper-neighborhoods/" width="100%" height="500px"></iframe>
-
+##
 ## Data Processing
 ### Sources
 
@@ -27,12 +27,12 @@ by statistical modelling.
 | Complaint incident reports               | NYPD / NYCOpenData                  | 
 | Housing construction jobs                | NYC Planning                        | 
 | Road, rail, and aviation noise data      | Bureau of Transportation Statistics | 
-
+###
 ### Dataset Descriptions
 #### Neighborhood Coordinates & Identifiers
 Data is retrieved from OpenStreetMap's Nominatim API. This is used to build a key, where each neighborhood name listed by 
 StreetEasy references its respective coordinates.
-
+###
 #### Median Asking Rent
 Data retrieved from StreetEasy's Data Dashboard. This is a wide dataset containing records of neighborhood-wise rent 
 prices for each month since 2010. 
@@ -45,15 +45,15 @@ Sample:
 | Auburndale         | Queens    | neighborhood |         |         |         |         |
 | Bath Beach         | Brooklyn  | neighborhood |         |         |         |         |
 | Battery Park City  | Manhattan | neighborhood | 3495    | 3346    | 3268    | 3295    |
-
+###
 #### NYPD Complaint Incidents
 Incident-level data retrieved from NYPD City-Wide Crime Statistics endpoint. Each row contains 36 values about an individual complaint,
 including coordinates referencing the incident's location. 
-
+###
 #### Housing Construction Jobs
 Data retrieved from NYC Planning's DCP Housing Database. The data contains all records since 2010 for building construction and demolition permits, 
 including the building's street address, coordinates, number of floors, zoning district, completion year, and permit years.
-
+###
 #### Road, Rail, and Aviation Noise
 This geospatial raster data comes from the US Bureau of Transportation Statistics. The data contains measurements of 
 aviation, road, and rail noise pollution across the US, as of 2020. 
@@ -62,7 +62,7 @@ aviation, road, and rail noise pollution across the US, as of 2020.
   <img src="/images/usdot-noise.png" alt="USDOT Noise" width="50%">
 </div>
 
-
+###
 ### Preprocessing & Transformation
 Pre-processing and transformation was orchestrated in Airflow.
 
@@ -90,7 +90,7 @@ Neighborhood-wise aggregate data was computed as follows:
 
 Following the completion of the output data format construction, standardization and scoring were performed. 
 All residual tables from joins and aggregations were removed at the end of the pipeline.
-
+###
 ### Standardization
 After the final data structure was formed, additional standardized columns were added to enable more precise weighting and 
 clearer analysis downstream. Standardization was computed using:
@@ -100,7 +100,7 @@ $$
 $$
 
 where `x` is the numeric value, `x_0.75` and `x_0.25` are the 75th and 25th percentiles of `x`, respectively.
-
+###
 ### Scoring
 A score was defined to enable simpler neighborhood comparison. Score is defined as:
 
@@ -119,7 +119,7 @@ Furthermore, scores were normalized between 0 and 1:
 $$
 \text{norm}(\text{score})=\frac{\text{score} - \text{min}(\text{score})}{\text{max}(\text{score})- \text{min}(\text{score})}
 $$
-
+###
 ### Distributions
 Below shows kernel densities of each standardized variable. Visualizing the distribution of each standardized variable not only enables more intuitive score weighting, but also 
 provides explanatory insight into the overall characteristics of neighborhoods in NYC. 
@@ -132,11 +132,11 @@ Differences in variables become apparent when looking at the distribution tails,
 clear on visual inspection that the height of building projects in NYC might vary more across neighborhoods than noise 
 level and crime. In this case, it may be appropriate to assign more weight to floors, but this should only be done after 
 testing quantitatively for differences between distributions.
-
+##
 ## Anomaly Detection
 To discover which neighborhoods are sleepers (unexpectedly low rent), a regression-based anomaly detection 
 model was constructed and assessed for validity.
-
+###
 ### Regression Model
 #### Construction
 A regression model was constructed to predict the recent median rent given the number of crimes, average noise levels, and average 
@@ -154,7 +154,7 @@ The model was fitted using `statsmodels.api`, and residuals were computed, produ
 | num_crimes  | -0.0083   | 0.027     | -0.311  | 0.757   |
 | avg_noise   | -52.0183  | 41.119    | -1.265  | 0.209   |
 | avg_age     | 184.3320  | 101.876   | 1.809   | 0.074   |
-
+###
 #### Assessment
 To ensure the regression model met theoretical assumptions and consequent valid conclusions, it was assessed using a series of tests. 
 Using a model residuals test, it was confirmed no non-linearity or heterscedasticity was present, either of which would
@@ -170,6 +170,7 @@ Additionally, there were no collinearity issues found between predictors, as see
   <img src="/images/housing-pred-cormat.png" alt="KDEs" width="75%">
 </div>
 
+###
 ### Anomaly Classification
 A rent price is considered an anomaly if the residual rent cost $\epsilon$ is less than a threshold $\lambda$ defined by 
 1.25 standard deviations $\sigma$ below the residual mean $\bar{\epsilon}$:
@@ -178,6 +179,7 @@ $$
 $$
 Then, each anomaly is highlighted in green on the plot. 
 
+##
 ## Conclusion
 It is already well known that rent prices are dependent on several factors, but those are proprietary. In a housing market
 like New York City's, one of the most expensive cities to live in within the US, saving on rent without compromising 
