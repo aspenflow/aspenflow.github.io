@@ -58,7 +58,6 @@ h6 {
   font-weight: $heading-font-weight;
   line-height: $heading-line-height;
   letter-spacing: $heading-letter-spacing;
-  margin-top: 2rem;
 }
 
 h1 {
@@ -259,5 +258,6 @@ table td {
 }
 
 iframe {
+  display: block;
   margin-bottom: 10px;
 }
