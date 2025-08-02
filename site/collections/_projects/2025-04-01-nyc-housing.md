@@ -19,6 +19,7 @@ by statistical modelling.
 
 ## Data Processing
 ### Sources
+
 | Description                              | Source                              |
 |------------------------------------------|-------------------------------------|
 | Neighborhood coordinates & identifiers   | OpenStreetMap                       | 
@@ -58,14 +59,15 @@ This geospatial raster data comes from the US Bureau of Transportation Statistic
 aviation, road, and rail noise pollution across the US, as of 2020. 
 
 <div style="text-align: center;">
-  <img src="/site/images/usdot-noise.png" alt="USDOT Noise" width="50%">
+  <img src="/images/usdot-noise.png" alt="USDOT Noise" width="50%">
 </div>
+
 
 ### Preprocessing & Transformation
 Pre-processing and transformation was orchestrated in Airflow.
 
 <div style="text-align: center;">
-  <img src="/site/images/housing-pipeline.png" alt="Housing Pipeline" width="50%">
+  <img src="/images/housing-pipeline.png" alt="Housing Pipeline" width="50%">
 </div>
 
 All aggregate data was assigned to its respective neighborhood based on coordinates. A record is attributed to the neighborhood whose
@@ -82,7 +84,7 @@ Rent data was transposed to long format, and missing values were handled during 
 Neighborhood-wise aggregate data was computed as follows: 
 * **Crime:** number of crimes per neighborhood 
 * **Noise:** average noise per neighborhood
-* **Recent rent:** median across the most recent `n` available records for each neighborhood, where `n <= 15`. 
+* **Recent rent:** median across the most recent $n$ available records for each neighborhood, where $n <= 15$. 
 * **Overall rent:** median across all available records for each neighborhood
 * **Floors:** median number of floors across all construction projects for each neighborhood
 
@@ -92,21 +94,28 @@ All residual tables from joins and aggregations were removed at the end of the p
 ### Standardization
 After the final data structure was formed, additional standardized columns were added to enable more precise weighting and 
 clearer analysis downstream. Standardization was computed using:
+
 $$
 \text{standard}(x) = \frac{x - \text{median}(x)}{x_{0.75}-x_{0.25}}
 $$
+
 where `x` is the numeric value, `x_0.75` and `x_0.25` are the 75th and 25th percentiles of `x`, respectively.
 
 ### Scoring
 A score was defined to enable simpler neighborhood comparison. Score is defined as:
+
 $$
 \text{score} = w_1\cdot\text{crime} + w_2\cdot\text{noise}  + w_3\cdot\frac{(\text{rent}_\text{overall} - \text{rent}_\text{recent})}{\text{rent}_\text{overall}} + w_4\cdot\text{age} + w_5\cdot \text{floors}
 $$
+
 For this deployment, all weights were left as 1, but can be altered in the pipeline as needed. That is, 
+
 $$
 w_1=\dots=w_5=1
 $$
+
 Furthermore, scores were normalized between 0 and 1:
+
 $$
 \text{norm}(\text{score})=\frac{\text{score} - \text{min}(\text{score})}{\text{max}(\text{score})- \text{min}(\text{score})}
 $$
@@ -116,7 +125,7 @@ Below shows kernel densities of each standardized variable. Visualizing the dist
 provides explanatory insight into the overall characteristics of neighborhoods in NYC. 
 
 <div style="text-align: center;">
-  <img src="/site/images/housing-dists.png" alt="KDEs" width="75%">
+  <img src="/images/housing-dists.png" alt="KDEs" width="75%">
 </div>
 
 Differences in variables become apparent when looking at the distribution tails, widths, kurtosis, and skew. For example, it is 
@@ -132,9 +141,11 @@ model was constructed and assessed for validity.
 #### Construction
 A regression model was constructed to predict the recent median rent given the number of crimes, average noise levels, and average 
 building age in a given neighborhood:
+
 $$
 \text{rent}_\text{pred} = \beta_0+\beta_1\cdot \text{crimes}+\beta_2\cdot\text{noise} + \beta_3\cdot\text{age}
 $$
+
 The model was fitted using `statsmodels.api`, and residuals were computed, producing the model with coefficients 
 
 | Variable    | Coef      | Std Err   | t       | P>\|t\| |
@@ -150,13 +161,13 @@ Using a model residuals test, it was confirmed no non-linearity or heterscedasti
 violate linear regression assumptions. 
 
 <div style="text-align: center;">
-  <img src="/site/images/housing-resid-fit-plot.png" alt="KDEs" width="75%">
+  <img src="/images/housing-resid-fit-plot.png" alt="KDEs" width="75%">
 </div>
 
 Additionally, there were no collinearity issues found between predictors, as seen with variance inflation factors:
 
 <div style="text-align: center;">
-  <img src="/site/images/housing-pred-cormat.png" alt="KDEs" width="75%">
+  <img src="/images/housing-pred-cormat.png" alt="KDEs" width="75%">
 </div>
 
 ### Anomaly Classification
