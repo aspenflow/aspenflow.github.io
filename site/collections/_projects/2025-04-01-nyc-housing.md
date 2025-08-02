@@ -172,9 +172,11 @@ Additionally, there were no collinearity issues found between predictors, as see
 ### Anomaly Classification
 A rent price is considered an anomaly if the residual rent cost $\epsilon$ is less than a threshold $\lambda$ defined by 
 1.25 standard deviations $\sigma$ below the residual mean $\bar{\epsilon}$:
+
 $$
 \lambda = \bar{\epsilon} - 1.25 \cdot \sigma_{\epsilon} \quad \epsilon \lt \lambda
 $$
+
 Then, each anomaly is highlighted in green on the plot. 
 
 ## Conclusion
