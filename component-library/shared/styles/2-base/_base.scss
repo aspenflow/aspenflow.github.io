@@ -125,6 +125,8 @@ img,
   max-width: 100%;
   height: auto;
   vertical-align: middle;
+  margin-bottom: 2rem;
+
 }
 
 img,
@@ -142,7 +144,6 @@ img,
   &+em {
     display: block;
     margin-top: 20px;
-    margin-bottom: 2rem;
     font-size: 14px;
     line-height: 22px;
     font-style: normal;
