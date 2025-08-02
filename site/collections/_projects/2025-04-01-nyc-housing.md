@@ -104,7 +104,10 @@ where `x` is the numeric value, `x_0.75` and `x_0.25` are the 75th and 25th perc
 A score was defined to enable simpler neighborhood comparison. Score is defined as:
 
 $$
-\text{score} = w_1\cdot\text{crime} + w_2\cdot\text{noise}  + w_3\cdot\frac{(\text{rent}_\text{overall} - \text{rent}_\text{recent})}{\text{rent}_\text{overall}} + w_4\cdot\text{age} + w_5\cdot \text{floors}
+\begin{aligned}
+\text{score} &= w_1\cdot\text{crime} + w_2\cdot\text{noise}  + w_3\cdot\frac{(\text{rent}_\text{overall} - \text{rent}_\text{recent})}{\text{rent}_\text{overall}} \\
+&\quad + w_4\cdot\text{age} + w_5\cdot \text{floors}
+\end{aligned}
 $$
 
 For this deployment, all weights were left as 1, but can be altered in the pipeline as needed. That is, 
